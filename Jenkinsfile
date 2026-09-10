@@ -32,55 +32,7 @@ pipeline {
 
     post {
         always {
-            archiveArtifacts artifacts: 'test-reports/**',
-                             allowEmptyArchive: true
-        }
-
-        success {
-            echo 'Pipeline succeeded'
-        }
-
-        failure {
-            echo 'Pipeline failed'
-        }
-    }
-}```groovy
-pipeline {
-    agent any
-
-    stages {
-        stage('Checkout') {
-            steps {
-                checkout scm
-            }
-        }
-
-        stage('Build') {
-            steps {
-                echo 'Building...'
-            }
-        }
-
-        stage('Test') {
-            steps {
-                echo 'Running tests...'
-            }
-        }
-
-        stage('Deploy') {
-            when {
-                branch 'main'
-            }
-            steps {
-                echo 'Deploying...'
-            }
-        }
-    }
-
-    post {
-        always {
-            archiveArtifacts artifacts: 'test-reports/**',
-                             allowEmptyArchive: true
+            archiveArtifacts artifacts: 'test-reports/**', allowEmptyArchive: true
         }
 
         success {
@@ -92,4 +44,3 @@ pipeline {
         }
     }
 }
-```
