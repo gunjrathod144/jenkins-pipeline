@@ -1,21 +1,49 @@
+```groovy
 pipeline {
     agent any
+
     stages {
-        stage('Build') {
+        stage('Checkout') {
             steps {
-                echo 'Building the project'
+                checkout scm
             }
         }
+
+        stage('Build') {
+            steps {
+                echo 'Building...'
+            }
+        }
+
         stage('Test') {
             steps {
-                echo 'Running tests'
+                echo 'Running tests...'
+            }
+        }
+
+        stage('Deploy') {
+            when {
+                branch 'main'
+            }
+            steps {
+                echo 'Deploying...'
             }
         }
     }
+
     post {
+        always {
+            archiveArtifacts artifacts: 'test-reports/**',
+                             allowEmptyArchive: true
+        }
+
         success {
             echo 'Pipeline succeeded'
         }
+
+        failure {
+            echo 'Pipeline failed'
+        }
     }
 }
-
+```
