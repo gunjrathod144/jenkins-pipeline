@@ -1,16 +1,29 @@
-stage('Test') {
-    parallel {
-        stage('unit') {
+pipeline {
+    agent any
+
+    stages {
+
+        stage('Build') {
             steps {
-                sh 'echo Running unit Tests'
+                echo 'building'
             }
         }
-        stage('Integration'){
-            steps{
-                sh 'echo running integration tests'
 
+        stage('Test') {
+            parallel {
+
+                stage('Unit') {
+                    steps {
+                        sh 'echo Running unit Tests'
+                    }
+                }
+
+                stage('Integration') {
+                    steps {
+                        sh 'echo Running integration tests'
+                    }
+                }
             }
         }
     }
 }
-        
