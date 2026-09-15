@@ -12,12 +12,18 @@ pipeline {
         stage('Test') {
             parallel {
 
-                stage('Unit') {
-                    steps {
-                        sh 'echo Running unit Tests'
+               stage('approve') {
+                   steps{
+                       input message: 'Test passed. Deploy to production?'
+                   }
+               }
+
+                stage('Deploy'){
+                    steps{
+                        sh 'echo deploying to production'
                     }
                 }
-
+                
                 stage('Integration') {
                     steps {
                         sh 'echo Running integration tests'
