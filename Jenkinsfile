@@ -1,46 +1,17 @@
 pipeline {
     agent any
 
-    stages {
-        stage('Checkout') {
-            steps {
-                checkout scm
-            }
-        }
-
-        stage('Build') {
-            steps {
-                echo 'Building...'
-            }
-        }
-
-        stage('Test') {
-            steps {
-                echo 'Running tests...'
-            }
-        }
-
-        stage('Deploy') {
-            when {
-                branch 'main'
-            }
-            steps {
-                echo 'Deploying...'
-            }
-        }
+    parameters {
+        string(name: "VERSION", defaultValue: '1.0', description: 'Version to deploy')
+        choice(name: "ENVIRONMENT", choices: ['staging', 'production'], description: 'Target')
+        booleanParam(name: 'SKIP_TESTS', defaultValue: false, description: 'skip tests?')
     }
 
-    post {
-        always {
-            archiveArtifacts artifacts: 'test-reports/**', allowEmptyArchive: true
-        }
-
-        success {
-            echo 'Pipeline succeeded'
-        }
-
-        failure {
-            echo 'Pipeline failed'
+    stages {
+        stage('Build') {
+            steps {
+                echo 'building'
+            }
         }
     }
 }
