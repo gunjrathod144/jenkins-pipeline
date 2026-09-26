@@ -1,14 +1,13 @@
 pipeline{
     agent any
+  environment {
+      APP_NAME = 'my-app'
+  }
     stages{
-       stage('Build') {
-           steps { sh 'echo Building' }
-       }
-        stage('Test') {
-            steps { sh 'echo Testing' }
-        }
-        stage('Deploy') {
-            steps { sh 'echo deploying' }
+        stage('Build') {
+            steps{
+                sh 'echo building $APP_NAME'
+            }
         }
     }
 }
