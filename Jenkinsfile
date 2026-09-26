@@ -10,8 +10,8 @@ pipeline {
     }
 
     stages {
-        stage('Test') {
 
+        stage('Test') {
             parallel {
 
                 stage('Unit') {
@@ -25,23 +25,23 @@ pipeline {
                         sh 'echo Integration tests'
                     }
                 }
-
-                stage('Approve') {
-                    steps {
-                        input message: 'Deploy to production?'
-                    }
-                }
             }
+        }
 
-            post {
-                success {
-                    echo 'pipeline succeeded'
-                }
-
-                failure {
-                    echo 'pipeline failed'
-                }
+        stage('Approve') {
+            steps {
+                input message: 'Deploy to production?'
             }
+        }
+    }
+
+    post {
+        success {
+            echo 'pipeline succeeded'
+        }
+
+        failure {
+            echo 'pipeline failed'
         }
     }
 }
