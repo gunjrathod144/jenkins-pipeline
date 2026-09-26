@@ -1,13 +1,14 @@
 pipeline{
     agent any
     stages{
-        stage('Hello') {
-            steps{
-                echo 'This just prints a message'
-                sh 'echo This runs a real shell command'
-                sh 'pwd'
-                sh 'ls -la'
-            }
+       stage('Build') {
+           steps { sh 'echo Building' }
+       }
+        stage('Test') {
+            steps { sh 'echo Testing' }
+        }
+        stage('Deploy') {
+            steps { sh 'echo deploying' }
         }
     }
 }
