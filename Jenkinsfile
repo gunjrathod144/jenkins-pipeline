@@ -1,17 +1,33 @@
 pipeline {
     agent any
 
-    stages {
-        stage('Build') {
-            steps {
-                echo 'Building...'
+   environment {
+       APP_ENV = 'test'
+   }
+    stages{
+        stage('checkout') {
+            steps{
+                checkout scm
             }
         }
+        stage('Build') {
+            steps{
 
-        stage('Test') {
-            steps {
-                echo 'Testing...'
+                sh 'echo Building'
             }
+        }
+        stage('Test') {
+            steps{
+                sh 'echo running tests'
+            }
+        }
+    }
+    post {
+        success {
+            echo 'All stages passed'
+        }
+        failure{
+            echo 'something failed'
         }
     }
 }
