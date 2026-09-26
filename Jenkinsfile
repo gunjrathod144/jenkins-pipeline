@@ -1,13 +1,29 @@
-pipeline{
+pipeline {
     agent any
-parameters {
-    choice(name: 'ENVIRONMENT', choices: ['staging', 'prodcution'], description: 'Target')
+
+    parameters {
+        choice(
+            name: 'ENVIRONMENT',
+            choices: ['staging', 'production'],
+            description: 'Target'
+        )
+    }
+
+    stages {
+        stage('Test') {
+            parallel {
+                stage('Unit') {
+                    steps {
+                        sh 'echo unit tests'
+                    }
+                }
+
+                stage('Integration') {
+                    steps {
+                        sh 'echo Integration tests'
+                    }
+                }
+            }
+        }
+    }
 }
-    stages{
-      stage('Test') {
-          parallel {
-              stage('unit') { steps { sh 'echo unit tests' } }
-              stage('Integration') { steps { sh 'echo Integration tests' }}
-          }
-      }
-        
